@@ -8,6 +8,8 @@
     "start:stg": "ng serve --environment stg",
     "start:prod": "ng serve --environment prod",
     "build": "ng build",
+    "build:stg": "ng build --environment stg",
+    "build:prod": "ng build --environment prod",
     "test": "ng test --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -1,5 +1,6 @@
 # Built #
 /node_modules/
+/dist/
 
 # Setting #
 mnemonic.json
