@@ -1,0 +1,5 @@
+# Built #
+/node_modules/
+
+# Setting #
+mnemonic.json

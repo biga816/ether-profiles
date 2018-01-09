@@ -1,0 +1,33 @@
+@import "../../../assets/styles/common.scss";
+
+.search-info {
+  .mat-form-field {
+    padding-right: 12px;
+    width: 100%;
+  }
+
+  .actions {
+    display: inline;
+
+    button:nth-child(2) {
+      margin-left: 8px;
+    }  
+  }
+}
+
+.result-info {
+  padding-top: 16px;
+
+  .mat-card{
+    padding-top: 0;
+  }
+}
+
+// sm-xl
+@media screen and (min-width: 600px){
+  .search-info {
+    .mat-form-field {
+      width: 320px;
+    }
+  }
+}

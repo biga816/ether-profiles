@@ -1,0 +1,52 @@
+<router-outlet></router-outlet>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav
+      class="app-sidenav"
+      mode="{{sideNavMode}}"
+      opened="false">
+    <mat-toolbar></mat-toolbar>
+
+    <mat-nav-list class="app-sidenav-container">
+      <a *ngFor="let page of pages;" mat-list-item
+          [routerLink]="page.url"
+          [routerLinkActive]="['is-active']"
+          [routerLinkActiveOptions]="{exact: true}"
+          (click)="closeSidnav()">
+        <mat-icon matListIcon>keyboard_arrow_right</mat-icon>
+        <span>{{page.name}}</span>
+      </a>
+    </mat-nav-list>
+
+    <div class="copyright">
+      <span>©︎2017-{{copyright}}</span>
+      <a href="http://tanakas.org/" target="_blank">tanakas.org</a>
+    </div>
+  </mat-sidenav>
+
+  <header>
+    <mat-toolbar class="app-toolber" [ngClass]="{'home-tooler': isHome}">
+      <a class="menu-trigger"
+          [ngClass]="{'active': isOpen}"
+          (click)="toggelSidnav(isOpen)">
+        <span></span>
+        <span></span>
+        <span></span>
+      </a>
+      <!-- <div class="page-name">My Profiles</div> -->
+      <div class="page-name">
+        <img src="./assets/img/logo.png">
+      </div>
+      <span class="toolber-spacer"></span>
+      <div class="network" [ngClass]="networkName?.toLowerCase()">
+        <p>
+          <label>Network</label>
+          {{networkName}}
+        </p>
+      </div>
+    </mat-toolbar>
+  </header>
+
+  <main>
+    <router-outlet #o="outlet"></router-outlet>
+  </main>
+</mat-sidenav-container>

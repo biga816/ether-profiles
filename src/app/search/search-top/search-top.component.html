@@ -1,0 +1,31 @@
+<mat-toolbar class="page-header dummy"></mat-toolbar>
+
+<div class="app-container">
+  <div class="app-inner">
+
+    <div class="search-info">
+      <h1>Search</h1>
+      <form [formGroup]="profileForm" novalidate>
+        <mat-form-field>
+          <input matInput class="form-control" formControlName="address" placeholder="Target Address">
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+        <div class="actions">
+          <button mat-raised-button (click)="search()">Search</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="result-info" *ngIf="profile">
+      <h1>Result</h1>
+      <mat-card class="result-card">
+        <app-profile-header [profile]="profile"></app-profile-header>
+        <mat-card-content>
+          <app-profile-content [profile]="profile"></app-profile-content>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  
+  </div>
+</div>
+  

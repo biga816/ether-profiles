@@ -1,0 +1,18 @@
+<app-qrcode [account]="profile.accountAddress" fxHide fxShow.xs="true"></app-qrcode>
+<p [innerHTML]="profile.description | toBr"></p>
+<a class="profile-url" [href]="profile.profileUrl" target="_blank" fxHide fxShow.xs="true" *ngIf="profile.profileUrl">{{profile.profileUrl}}</a>
+
+<div class="blocks">
+  <mat-chip-list>
+    <mat-chip (click)="openLink(profile.createBlock)">Created at #{{profile.createBlock}}</mat-chip>
+    <mat-chip (click)="openLink(profile.updateBlock)">Updated at #{{profile.updateBlock}}</mat-chip>
+  </mat-chip-list>
+</div>
+
+<mat-form-field class="share-address">
+  <span matPrefix>Share: &nbsp;</span>
+  <input #link matInput [value]="domain + '/search?address=' + profile.accountAddress + '&networkId=' + (networkId$ | async)" readonly="readonly" />
+  <button mat-button color="primary" matSuffix [appClipboard]="link" (clipboardSuccess)="copySuccess();">
+    <mat-icon aria-label="Example icon-button with a heart icon">content_copy</mat-icon>
+  </button>
+</mat-form-field>

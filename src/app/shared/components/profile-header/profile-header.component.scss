@@ -1,0 +1,46 @@
+@import "../../../../assets/styles/common.scss";
+
+.profile-header-container {
+  display: flex;
+}
+
+.qr-code {
+  width: 120px;
+  padding: 12px 0;
+  float: left;
+}
+
+.detail {
+  padding: 18px 0;
+  width: 100%;
+  position: relative;
+
+  .name {
+    font-size: $sizeLg;
+    margin-bottom: 4px;
+  }
+
+  .address {
+    font-size: $sizeXs;
+  }
+
+  .address, .name {
+    @extend .noto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .profile-url {
+    position: absolute;
+    bottom: 28px;
+  }
+}
+
+// sm-xl
+@media screen and (min-width: 600px){  
+  .detail {
+    padding: 18px 12px;
+    width: calc(100% - 126px);
+  }  
+}

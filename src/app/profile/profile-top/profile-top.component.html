@@ -1,0 +1,56 @@
+<mat-toolbar class="page-header dummy"></mat-toolbar>
+
+<div class="app-container">
+  <div class="app-inner">
+
+    <!-- address info -->
+    <div class="address-info">
+      <h1>My addresses</h1>
+      <p>You can associate your profile with an ethereum address and save it on the block chain.</p>
+      <ul class="load-info">
+        <li>Load your accunts from Metamask.</li>
+        <li>You can use only Test network(Ropsten, Kovan, Rinkeby).</li>
+      </ul>
+
+      <div *ngIf="this.model.account; then thenBlock; else elseBlock"></div>
+      <ng-template #thenBlock>
+        <mat-form-field>
+          <mat-select placeholder="Target Address" [(ngModel)]="model.account">
+            <mat-option *ngFor="let account of accounts" [value]="account">{{account}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="actions">
+          <button mat-raised-button (click)="showModal(model.account)">Set</button>
+          <button mat-raised-button (click)="getProfile()">Load</button>
+        </div>
+      </ng-template>
+      <ng-template #elseBlock>
+        <button mat-raised-button (click)="getAccount()">Load Your Accounts</button>
+      </ng-template>
+    </div>
+  
+    <!-- profile info -->
+    <div class="profile-info">
+      <h1>Profiles</h1>
+
+      <div *ngIf="(profiles$ | async)?.length > 0; then thenProfileBlock; else elseProfileBlock"></div>
+      <ng-template #thenProfileBlock>
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let profile of profiles$ | async">
+            <mat-expansion-panel-header>
+              <app-profile-header [profile]="profile"></app-profile-header>
+            </mat-expansion-panel-header>
+            <app-profile-content [profile]="profile"></app-profile-content>
+
+            <mat-action-row>
+              <button mat-button color="warn" (click)="remove(profile.accountAddress)">Remove</button>
+            </mat-action-row>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </ng-template>
+      <ng-template #elseProfileBlock>
+        <p #elseBlock>No data found.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

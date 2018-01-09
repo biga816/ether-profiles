@@ -1,0 +1,21 @@
+<div class="dialog-inner">
+  <form [formGroup]="profileForm" novalidate>
+      <div class="form-group example-container">
+        <mat-form-field>
+          <input matInput class="form-control" formControlName="address" placeholder="Address">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput class="form-control" formControlName="name" placeholder="Name">
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput placeholder="Description" class="form-control" formControlName="description" rows="5"></textarea>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput class="form-control" formControlName="profileUrl" placeholder="ProfileUrl">
+        </mat-form-field>
+      </div>
+    </form>
+    <button  mat-button (click)="setProfile()">Save</button>
+    <button  mat-button (click)="close()">Cancel</button>
+</div> 

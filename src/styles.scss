@@ -1,0 +1,99 @@
+/* You can add global styles to this file, and also import other style files */
+// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "./assets/styles/common.scss";
+
+@import '~@angular/material/theming';
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue.
+$app-primary: mat-palette($mat-grey);
+$app-accent:  mat-palette($mat-grey, 600);
+
+// The warn palette is optional (defaults to red).
+$app-warn:    mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($app-theme);
+
+// fonts
+@font-face {
+  font-family: 'Noto-Thin';
+  src: url('./assets/fonts/NotoSansCJKjp-Thin.woff') format('truetype');
+}
+
+
+// Common style
+html {
+  font-size: $sizeSm;
+}
+
+body {
+  font-family: 'Noto-Thin', 'Hiragino Kaku Gothic ProN','メイリオ', sans-serif;
+  font-weight: 200;
+  line-height: 1.42857143;
+  color: $baseColor;
+  margin: 0;
+}
+
+main {
+  > ng-component {
+    height: 100%;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  &.active {
+    > ng-component {
+      &.ng-animating {
+        width: calc(100vw - 240px);
+      }
+    }      
+  }
+}
+
+// header
+header {
+  .toolber-spacer {
+    flex: 1 1 auto;
+  }
+}
+
+
+// main content
+.app-container {
+  padding: 12px 12px 56px 12px;;
+  background-color: #f8f8f8;
+  min-height: calc(100vh - 124px);
+}
+
+.page-header {
+  @extend .shadow;
+  widows: 100%;
+  background-color: $mainColor;
+
+  &.dummy {
+    background-color: white;
+  }
+}
+
+a {
+  color: $mainColor;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+// sm-xl
+@media screen and (min-width: 600px){
+  .app-container {
+    padding: 16px 36px 56px 36px;
+    min-height: calc(100vh - 136px);
+  }  
+}

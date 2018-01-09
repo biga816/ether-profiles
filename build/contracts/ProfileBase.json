@@ -1,0 +1,340 @@
+{
+  "contractName": "ProfileBase",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "userList",
+      "outputs": [
+        {
+          "name": "accountAddress",
+          "type": "address"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "profileUrl",
+          "type": "string"
+        },
+        {
+          "name": "createBlock",
+          "type": "uint256"
+        },
+        {
+          "name": "updateBlock",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b6102ed8061001e6000396000f300606060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680631b4e7bd214610046575b600080fd5b341561005157600080fd5b61007d600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610268565b604051808773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001806020018060200186815260200185815260200184810384528981815460018160011615610100020316600290048152602001915080546001816001161561010002031660029004801561014c5780601f106101215761010080835404028352916020019161014c565b820191906000526020600020905b81548152906001019060200180831161012f57829003601f168201915b50508481038352888181546001816001161561010002031660029004815260200191508054600181600116156101000203166002900480156101cf5780601f106101a4576101008083540402835291602001916101cf565b820191906000526020600020905b8154815290600101906020018083116101b257829003601f168201915b50508481038252878181546001816001161561010002031660029004815260200191508054600181600116156101000203166002900480156102525780601f1061022757610100808354040283529160200191610252565b820191906000526020600020905b81548152906001019060200180831161023557829003601f168201915b5050995050505050505050505060405180910390f35b60006020528060005260406000206000915090508060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169080600101908060020190806003019080600401549080600501549050865600a165627a7a72305820740da7b06f8076e07d8b81b5bd8d436e3f44d62655a5caec0222e20e49b3c6750029",
+  "deployedBytecode": "0x606060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680631b4e7bd214610046575b600080fd5b341561005157600080fd5b61007d600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610268565b604051808773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200180602001806020018060200186815260200185815260200184810384528981815460018160011615610100020316600290048152602001915080546001816001161561010002031660029004801561014c5780601f106101215761010080835404028352916020019161014c565b820191906000526020600020905b81548152906001019060200180831161012f57829003601f168201915b50508481038352888181546001816001161561010002031660029004815260200191508054600181600116156101000203166002900480156101cf5780601f106101a4576101008083540402835291602001916101cf565b820191906000526020600020905b8154815290600101906020018083116101b257829003601f168201915b50508481038252878181546001816001161561010002031660029004815260200191508054600181600116156101000203166002900480156102525780601f1061022757610100808354040283529160200191610252565b820191906000526020600020905b81548152906001019060200180831161023557829003601f168201915b5050995050505050505050505060405180910390f35b60006020528060005260406000206000915090508060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169080600101908060020190806003019080600401549080600501549050865600a165627a7a72305820740da7b06f8076e07d8b81b5bd8d436e3f44d62655a5caec0222e20e49b3c6750029",
+  "sourceMap": "26:235:1:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "26:235:1:-;;;;;;;;;;;;;;;;;;;;;;;;51:45;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.4.16;\n\ncontract ProfileBase {\n  mapping (address => UserInfo) public userList;\n\n  struct UserInfo {\n    address accountAddress;\n    string name;\n    string description;\n    string profileUrl;\n    uint createBlock;\n    uint updateBlock;\n  }\n\n}",
+  "sourcePath": "/Users/biga816/dev/study/ethereum/truffle-angular/contracts/ProfileBase.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/Users/biga816/dev/study/ethereum/truffle-angular/contracts/ProfileBase.sol",
+      "exportedSymbols": {
+        "ProfileBase": [
+          76
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".16"
+          ]
+        },
+        "id": 58,
+        "name": "PragmaDirective",
+        "src": "0:24:1"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            76
+          ],
+          "name": "ProfileBase",
+          "scope": 77
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": false,
+              "name": "userList",
+              "scope": 76,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => struct ProfileBase.UserInfo storage ref)",
+              "value": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => struct ProfileBase.UserInfo storage ref)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 59,
+                    "name": "ElementaryTypeName",
+                    "src": "60:7:1"
+                  },
+                  {
+                    "attributes": {
+                      "contractScope": null,
+                      "name": "UserInfo",
+                      "referencedDeclaration": 75,
+                      "type": "struct ProfileBase.UserInfo storage pointer"
+                    },
+                    "id": 60,
+                    "name": "UserDefinedTypeName",
+                    "src": "71:8:1"
+                  }
+                ],
+                "id": 61,
+                "name": "Mapping",
+                "src": "51:29:1"
+              }
+            ],
+            "id": 62,
+            "name": "VariableDeclaration",
+            "src": "51:45:1"
+          },
+          {
+            "attributes": {
+              "canonicalName": "ProfileBase.UserInfo",
+              "name": "UserInfo",
+              "scope": 76,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "accountAddress",
+                  "scope": 75,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 63,
+                    "name": "ElementaryTypeName",
+                    "src": "123:7:1"
+                  }
+                ],
+                "id": 64,
+                "name": "VariableDeclaration",
+                "src": "123:22:1"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "name",
+                  "scope": 75,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "string storage pointer",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "string",
+                      "type": "string storage pointer"
+                    },
+                    "id": 65,
+                    "name": "ElementaryTypeName",
+                    "src": "151:6:1"
+                  }
+                ],
+                "id": 66,
+                "name": "VariableDeclaration",
+                "src": "151:11:1"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "description",
+                  "scope": 75,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "string storage pointer",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "string",
+                      "type": "string storage pointer"
+                    },
+                    "id": 67,
+                    "name": "ElementaryTypeName",
+                    "src": "168:6:1"
+                  }
+                ],
+                "id": 68,
+                "name": "VariableDeclaration",
+                "src": "168:18:1"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "profileUrl",
+                  "scope": 75,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "string storage pointer",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "string",
+                      "type": "string storage pointer"
+                    },
+                    "id": 69,
+                    "name": "ElementaryTypeName",
+                    "src": "192:6:1"
+                  }
+                ],
+                "id": 70,
+                "name": "VariableDeclaration",
+                "src": "192:17:1"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "createBlock",
+                  "scope": 75,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 71,
+                    "name": "ElementaryTypeName",
+                    "src": "215:4:1"
+                  }
+                ],
+                "id": 72,
+                "name": "VariableDeclaration",
+                "src": "215:16:1"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "updateBlock",
+                  "scope": 75,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 73,
+                    "name": "ElementaryTypeName",
+                    "src": "237:4:1"
+                  }
+                ],
+                "id": 74,
+                "name": "VariableDeclaration",
+                "src": "237:16:1"
+              }
+            ],
+            "id": 75,
+            "name": "StructDefinition",
+            "src": "101:157:1"
+          }
+        ],
+        "id": 76,
+        "name": "ContractDefinition",
+        "src": "26:235:1"
+      }
+    ],
+    "id": 77,
+    "name": "SourceUnit",
+    "src": "0:261:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
+  "networks": {
+    "3": {
+      "events": {},
+      "links": {},
+      "address": "0x1d72a7bc551198e4766ed6cd11d9d3f3287ddd7e"
+    },
+    "4": {
+      "events": {},
+      "links": {},
+      "address": "0x3547b4b2f8d0eb422c2a72c7144a58e155e3f236"
+    },
+    "42": {
+      "events": {},
+      "links": {},
+      "address": "0x3aedea0cdb4682df6e9925783d8a9faa3c6a98cc"
+    }
+  },
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-01-09T13:44:14.737Z"
+}

@@ -1,0 +1,15 @@
+@import "../../../../assets/styles/common.scss";
+@import '~@angular/material/theming';
+
+.blocks {
+  margin: 14px 0;
+}
+
+.share-address {
+  width: 100%;
+  max-width: 640px;
+
+  input {
+    color: mat-color(mat-palette($mat-grey));
+  }
+}
