@@ -33,7 +33,7 @@ import { LocalstorageStore } from './../middleware/localstorage-store';
     AppComponent
   ],
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { useHash: true }),
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,

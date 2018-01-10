@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import Web3 from 'web3';
 import { default as contract } from 'truffle-contract';
-import { Subject, Observable, Subscription } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/take';
+
 import { ActivatedRoute } from '@angular/router';
 
 import { environment } from './../../../environments/environment';

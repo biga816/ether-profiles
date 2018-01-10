@@ -6,10 +6,10 @@
     "ng": "ng",
     "start": "ng serve",
     "start:stg": "ng serve --environment stg",
-    "start:prod": "ng serve --environment prod",
+    "start:prod": "ng serve --environment prod --prod",
     "build": "ng build",
     "build:stg": "ng build --environment stg",
-    "build:prod": "ng build --environment prod",
+    "build:prod": "ng build --environment prod --prod",
     "test": "ng test --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -42,7 +42,7 @@
     "zone.js": "^0.8.18"
   },
   "devDependencies": {
-    "@angular/cli": "^1.5.4",
+    "@angular/cli": "^1.6.3",
     "@angular/compiler-cli": "^5.0.3",
     "@angular/language-service": "^4.4.6",
     "@types/jasmine": "^2.8.2",
