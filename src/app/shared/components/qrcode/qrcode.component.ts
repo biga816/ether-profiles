@@ -1,4 +1,4 @@
-import { Injectable, Inject, Component, ElementRef, Input, AfterViewInit } from '@angular/core';
+import { Injectable, Inject, Component, ElementRef, Input } from '@angular/core';
 
 // libs
 import * as qrcode from 'qrcode';
@@ -10,8 +10,10 @@ import * as qrcode from 'qrcode';
   `,
   styleUrls: ['./qrcode.component.scss']
 })
-export class QrcodeComponent implements AfterViewInit {
-  @Input() public account: any;
+export class QrcodeComponent {
+  @Input() set account(account: string) {
+    this.setQrcode(account);
+  }
 
   /**
    * Creates an instance of QrcodeComponent.
@@ -26,10 +28,10 @@ export class QrcodeComponent implements AfterViewInit {
    *
    * @memberof QrcodeComponent
    */
-  public ngAfterViewInit() {
+  public setQrcode(account: string) {
     const nativeElement = this.elementRef.nativeElement;
 
-    qrcode.toCanvas(nativeElement.children[0], `ethereum:${this.account}`, (error) => {
+    qrcode.toCanvas(nativeElement.children[0], `ethereum:${account}`, (error) => {
       if (error) {
         console.error(error);
       }

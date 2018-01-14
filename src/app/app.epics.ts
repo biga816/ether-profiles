@@ -34,4 +34,18 @@ export class AppEpics {
             }));
       });
   }
+
+  @Epic() getContractOwner = (action$: ActionsObservable<any>) => {
+    return action$.ofType(AppActions.GET_CONTRACT_OWNER)
+      .mergeMap(({ payload, meta }: IPayloadAction<any, any>) => {
+        return this.service.getContractOwner()
+          .then(ownerAddress => ({
+              type: AppActions.GET_CONTRACT_OWNER_SUCCESS,
+              meta: { ownerAddress }
+            }))
+          .catch(() => ({
+              type: AppActions.GET_CONTRACT_OWNER_ERROR
+            }));
+      });
+  }
 }

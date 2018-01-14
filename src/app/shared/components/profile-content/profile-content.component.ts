@@ -84,7 +84,7 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
    */
   copySuccess(): void {
     // show snack bar
-    this.snackBar.open('Copied successfully', null, {
+    this.snackBar.open('Copied share link successfully', null, {
       duration: 2000
     });
   }

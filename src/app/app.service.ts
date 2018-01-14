@@ -69,4 +69,24 @@ export class AppService {
       throw err;
     }
   }
+
+
+  /**
+   *
+   *
+   * @returns {Promise<any>}
+   * @memberof AppService
+   */
+  async getContractOwner(): Promise<any> {
+    try {
+      const profileCoreAbstraction = await this.web3Service.artifactsToContract(profileCoreArtifacts);
+      const deployedProfileCore = await profileCoreAbstraction.deployed();
+
+      const ownerAddress = await deployedProfileCore.owner.call();
+
+      return ownerAddress;
+    } catch (err) {
+      throw err;
+    }
+  }
 }

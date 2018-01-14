@@ -17,9 +17,19 @@
       </a>
     </mat-nav-list>
 
-    <div class="copyright">
-      <span>©︎2017-{{copyright}}</span>
-      <a href="http://tanakas.org/" target="_blank">tanakas.org</a>
+    <div class="footer">
+      <div class="donation" *ngIf="ownerAddress$ | async">
+        <input #ownerAddress [value]="ownerAddress$ | async" readonly="readonly" />
+        <button mat-button matSuffix [appClipboard]="ownerAddress" (clipboardSuccess)="copySuccess();">
+          <mat-icon>favorite</mat-icon>
+          Donation is here  
+        </button>
+        <app-qrcode [account]="ownerAddress$ | async" [appClipboard]="ownerAddress" (clipboardSuccess)="copySuccess();"></app-qrcode>    
+      </div>
+      <div class="copyright">
+        <span>©︎2017-{{copyright}}</span>
+        <a href="http://tanakas.org/" target="_blank">tanakas.org</a>    
+      </div>
     </div>
   </mat-sidenav>
 

@@ -13,12 +13,14 @@ export interface IAppState {
   snackbarInfo: ISnackbarInfo;
   accounts: string[];
   networkId: number;
+  ownerAddress: string;
 }
 
 export const INITIAL_STATE: IAppState = {
   snackbarInfo: null,
   accounts: [],
-  networkId: null
+  networkId: null,
+  ownerAddress: null
 };
 
 /**
@@ -48,7 +50,12 @@ export function appReducer(state: IAppState = INITIAL_STATE, action: IPayloadAct
         ...state,
         networkId: action.meta.networkId
       };
-
+    }
+    case AppActions.GET_CONTRACT_OWNER_SUCCESS: {
+      return {
+        ...state,
+        ownerAddress: action.meta.ownerAddress
+      };
     }
   }
 

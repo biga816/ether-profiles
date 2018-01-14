@@ -24,6 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
   @select(['app', 'snackbarInfo']) readonly snackbarInfo$: Observable<any>;
   @select(['app', 'accounts']) readonly account$: Observable<any>;
   @select(['app', 'networkId']) readonly networkId$: Observable<any>;
+  @select(['app', 'ownerAddress']) readonly ownerAddress$: Observable<any>;
 
   copyright: number = new Date().getFullYear();
   snackbarInfo: ISnackbarInfo;
@@ -122,17 +123,31 @@ export class AppComponent implements OnInit, OnDestroy {
   /**
    *
    *
+   * @memberof AppComponent
+   */
+  copySuccess(): void {
+    // show snack bar
+    this.snackBar.open('Copied address successfully', null, {
+      duration: 2000
+    });
+  }
+
+  /**
+   *
+   *
    * @private
    * @memberof AppComponent
    */
   private watchAccount(): void {
     setTimeout(() => {
       this.ngRedux.dispatch(this.actions.setNetworkName());
+      this.ngRedux.dispatch(this.actions.getContractOwner());
     }, 1000);
 
     this.web3Service.accountsObservable.subscribe((accounts) => {
       this.ngRedux.dispatch(this.actions.setAccounts(accounts));
       this.ngRedux.dispatch(this.actions.setNetworkName());
+      this.ngRedux.dispatch(this.actions.getContractOwner());
     });
   }
 
