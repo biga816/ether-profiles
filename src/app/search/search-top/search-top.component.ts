@@ -49,7 +49,6 @@ export class SearchTopComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     const address = this.route.snapshot.queryParams['address'];
-    // const networkId = this.route.snapshot.queryParams['networkId'];
     if (address) {
       this.ngRedux.dispatch(this.actions.searchProfile(address));
     }

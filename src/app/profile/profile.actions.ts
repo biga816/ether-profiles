@@ -42,11 +42,11 @@ export class ProfileActions {
    * @returns {IPayloadAction<any, any>}
    * @memberof ProfileActions
    */
-  saveProfile(profile: ProfileModel, networkId: number): IPayloadAction<any, any> {
+  saveProfile(profile: ProfileModel, networkName: string, privateKey: string): IPayloadAction<any, any> {
     return {
       type: ProfileActions.SAVE_PROFILE,
-      meta: { networkId },
-      payload: { profile }
+      meta: { networkName },
+      payload: { profile, privateKey }
     };
   }
 

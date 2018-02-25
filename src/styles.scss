@@ -74,6 +74,11 @@ header {
   min-height: calc(100vh - 124px);
 }
 
+// dialog
+.mat-dialog-container {
+  position: relative;
+}
+
 .page-header {
   @extend .shadow;
   widows: 100%;

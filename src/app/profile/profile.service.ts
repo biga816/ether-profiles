@@ -4,7 +4,8 @@ import 'rxjs/add/operator/toPromise';
 // shared
 import { ProfileModel } from '../shared/models/profile.model';
 
-import { Web3Service } from '../shared/services/web3.service';
+// import { Web3Service } from '../shared/services/web3.service';
+import { EthersService } from '../shared/services/ethers.service';
 import profileCoreArtifacts from '../../../build/contracts/ProfileCore.json';
 
 @Injectable()
@@ -16,7 +17,8 @@ export class ProfileService {
    * @memberof ProfileService
    */
   constructor(
-    private web3Service: Web3Service,
+    // private web3Service: Web3Service,
+    private ethersService: EthersService
   ) {
   }
 
@@ -27,30 +29,24 @@ export class ProfileService {
    * @returns
    * @memberof ProfileService
    */
-  async sendSetUserInfo(profile: ProfileModel) {
+  async sendSetUserInfo(profile: ProfileModel, privateKey: string) {
     try {
-      const profileCoreAbstraction = await this.web3Service.artifactsToContract(profileCoreArtifacts);
-      const deployedProfileCore = await profileCoreAbstraction.deployed();
+      const contract = this.ethersService.getContract(profileCoreArtifacts, privateKey);
 
       // set parameters
       const params = [
         profile.name,
         profile.description || '',
-        profile.profileUrl || '',
-        { from: profile.accountAddress }
+        profile.profileUrl || ''
       ];
 
-      const result = await deployedProfileCore.setUserInfo(...params);
-      const transactionHash = result && result.receipt ? result.receipt.transactionHash : null;
+      const result = await contract.setUserInfo(...params);
+      const transactionHash = result ? result.hash : null;
 
       return transactionHash;
     } catch (err) {
       throw err;
     }
-  }
-
-  updateWeb3(): boolean {
-    return this.web3Service.updateWeb3();
   }
 
 }

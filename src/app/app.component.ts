@@ -7,11 +7,14 @@ import { IAppState, ISnackbarInfo } from './app.reducer';
 import { AppActions } from './app.actions';
 
 // shared
-import { Web3Service } from './shared/services/web3.service';
-import { WEB3 } from './shared/utils/const';
+// import { Web3Service } from './shared/services/web3.service';
+import { EthersService } from './shared/services/ethers.service';
+import { WEB3, ETH } from './shared/utils/const';
+import { WalletDialogComponent } from './shared/components/wallet-dialog/wallet-dialog.component';
+import { WalletModel } from './shared/models/wallet.model';
 
 // libs
-import { MatSidenav, MatSnackBar } from '@angular/material';
+import { MatSidenav, MatSnackBar, MatDialog } from '@angular/material';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 
 @Component({
@@ -22,19 +25,23 @@ import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav') sidenav: MatSidenav;
   @select(['app', 'snackbarInfo']) readonly snackbarInfo$: Observable<any>;
-  @select(['app', 'accounts']) readonly account$: Observable<any>;
-  @select(['app', 'networkId']) readonly networkId$: Observable<any>;
+  @select(['app', 'networkName']) readonly networkName$: Observable<any>;
   @select(['app', 'ownerAddress']) readonly ownerAddress$: Observable<any>;
+  @select(['app', 'wallet']) readonly wallet$: Observable<any>;
 
   copyright: number = new Date().getFullYear();
   snackbarInfo: ISnackbarInfo;
   snackbarInfoSub: Subscription;
-  networkIdSub: Subscription;
+  networkNameSub: Subscription;
+  walletSub: Subscription;
   mediaSub: Subscription;
   mqAlias = '';
   sideNavMode = 'over';
   isOpen = false;
   networkName: string;
+  networks: any[] = ETH.NETWORKS;
+  targetNetworkName = 'ropsten';
+  myWallet: WalletModel;
 
   model = {
     network: null
@@ -57,24 +64,15 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     public snackBar: MatSnackBar,
     public media: ObservableMedia,
+    public dialog: MatDialog,
     private ngRedux: NgRedux<IAppState>,
     private actions: AppActions,
-    private web3Service: Web3Service
+    // private web3Service: Web3Service,
+    private ethersService: EthersService
   ) {
-    this.snackbarInfoSub = this.snackbarInfo$.subscribe((snackbarInfo: ISnackbarInfo) => {
-      if (!snackbarInfo) {
-        return;
-      }
-      // show snack bar
-      this.snackBar.open(snackbarInfo.message, null, {
-        duration: 2000
-      });
-    });
-
-    this.networkIdSub = this.networkId$.subscribe((networkId: number) => {
-      this.networkName = WEB3.NETWORK[networkId] || WEB3.NETWORK['unknown'];
-      this.model.network = networkId;
-    });
+    this.watchSnackbarInfo();
+    this.watchWallet();
+    this.watchNetworkName();
   }
 
   /**
@@ -83,9 +81,13 @@ export class AppComponent implements OnInit, OnDestroy {
    * @memberof AppComponent
    */
   ngOnInit(): void {
-    this.watchAccount();
+    this.ngRedux.dispatch(this.actions.getContractOwner());
+
     this.watchMediaChange();
     this.watchSidenav();
+
+    const defaultNetworks = this.ethersService.defaultNetworks;
+    this.ngRedux.dispatch(this.actions.setNetworkName(defaultNetworks));
   }
 
   /**
@@ -96,7 +98,8 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.mediaSub.unsubscribe();
     this.snackbarInfoSub.unsubscribe();
-    this.networkIdSub.unsubscribe();
+    this.networkNameSub.unsubscribe();
+    this.walletSub.unsubscribe();
   }
 
   /**
@@ -135,19 +138,47 @@ export class AppComponent implements OnInit, OnDestroy {
   /**
    *
    *
+   * @memberof AppComponent
+   */
+  showWalletDialog(): void {
+    this.dialog.open(WalletDialogComponent, {
+      data: { wallet: this.myWallet }
+    });
+  }
+
+  changeNetwork(event): void {
+    const targetNetwork = event.value;
+    this.ethersService.setProvider(targetNetwork);
+    this.ngRedux.dispatch(this.actions.setNetworkName(targetNetwork));
+  }
+
+  /**
+   *
+   *
    * @private
    * @memberof AppComponent
    */
-  private watchAccount(): void {
-    setTimeout(() => {
-      this.ngRedux.dispatch(this.actions.setNetworkName());
-      this.ngRedux.dispatch(this.actions.getContractOwner());
-    }, 1000);
+  private watchSnackbarInfo(): void {
+    this.snackbarInfoSub = this.snackbarInfo$.subscribe((snackbarInfo: ISnackbarInfo) => {
+      if (!snackbarInfo) {
+        return;
+      }
+      // show snack bar
+      this.snackBar.open(snackbarInfo.message, null, {
+        duration: 2000
+      });
+    });
+  }
 
-    this.web3Service.accountsObservable.subscribe((accounts) => {
-      this.ngRedux.dispatch(this.actions.setAccounts(accounts));
-      this.ngRedux.dispatch(this.actions.setNetworkName());
-      this.ngRedux.dispatch(this.actions.getContractOwner());
+  /**
+   *
+   *
+   * @private
+   * @memberof AppComponent
+   */
+  private watchNetworkName(): void {
+    this.networkNameSub = this.networkName$.subscribe((networkName: string) => {
+      this.getBalance(this.myWallet);
     });
   }
 
@@ -184,6 +215,37 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     this.sidenav.onClose.subscribe(() => {
       this.isOpen = false;
+    });
+  }
+
+  /**
+   *
+   *
+   * @private
+   * @memberof AppComponent
+   */
+  private watchWallet(): void {
+    this.walletSub = this.wallet$.subscribe((wallet: WalletModel) => {
+      this.myWallet = wallet;
+      this.getBalance(wallet);
+    });
+  }
+
+  /**
+   *
+   *
+   * @private
+   * @param {WalletModel} wallet
+   * @returns
+   * @memberof AppComponent
+   */
+  private getBalance(wallet: WalletModel) {
+    if (!wallet) {
+      return;
+    }
+    this.ethersService.getBalance(wallet.address).then((balance: number) => {
+      wallet.balance = balance;
+      this.ngRedux.dispatch(this.actions.setWallet(wallet));
     });
   }
 }

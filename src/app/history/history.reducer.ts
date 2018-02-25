@@ -5,7 +5,7 @@ import { HistoryActions } from './history.actions';
 import { IPayloadAction } from './../shared/utils/payload-action.types';
 
 export interface ITxHash {
-  networkId: number;
+  networkName: string;
   hash: string;
 }
 
@@ -30,7 +30,7 @@ export function historyReducer(state: IHistoryState = INITIAL_STATE, action: IPa
     case HistoryActions.SAVE_TX_HASH: {
       const txHashes = state.txHashes;
       txHashes.unshift({
-        networkId: action.meta.networkId,
+        networkName: action.meta.networkName,
         hash: action.meta.txHash
       });
 

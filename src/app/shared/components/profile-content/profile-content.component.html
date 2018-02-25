@@ -11,7 +11,7 @@
 
 <mat-form-field class="share-address">
   <span matPrefix>Share: &nbsp;</span>
-  <input #link matInput [value]="domain + '/#/search?address=' + profile.accountAddress + '&networkId=' + (networkId$ | async)" readonly="readonly" />
+  <input #link matInput [value]="domain + '/#/search?address=' + profile.accountAddress + '&networkName=' + (networkName$ | async)" readonly="readonly" />
   <button mat-button color="primary" matSuffix [appClipboard]="link" (clipboardSuccess)="copySuccess();">
     <mat-icon aria-label="Example icon-button with a heart icon">content_copy</mat-icon>
   </button>

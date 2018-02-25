@@ -11,6 +11,7 @@ import { AppService } from './../app.service';
 import { QrcodeComponent } from './components/qrcode/qrcode.component';
 import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
 import { ProfileContentComponent } from './components/profile-content/profile-content.component';
+import { WalletDialogComponent } from './components/wallet-dialog/wallet-dialog.component';
 
 // directives
 import { ClipboardDirective } from './directives/clipboard.directive';
@@ -20,7 +21,8 @@ import { ToBrPipe } from './pipes/to-br.pipe';
 
 // services
 // import { ApiService } from './services/api.service';
-import { Web3Service } from './services/web3.service';
+// import { Web3Service } from './services/web3.service';
+import { EthersService } from './services/ethers.service';
 
 
 // libs
@@ -37,12 +39,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     QrcodeComponent,
     ProfileHeaderComponent,
     ProfileContentComponent,
+    WalletDialogComponent,
     // directives
     ClipboardDirective,
     // Pope
     ToBrPipe
   ],
-  entryComponents: [],
+  entryComponents: [
+    WalletDialogComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -70,7 +75,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AppActions,
     AppService,
     // ApiService
-    Web3Service,
+    // Web3Service,
+    EthersService,
   ],
   exports: [
     FormsModule,
@@ -97,6 +103,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     QrcodeComponent,
     ProfileHeaderComponent,
     ProfileContentComponent,
+    WalletDialogComponent,
     // directives
     ClipboardDirective,
     // Pope

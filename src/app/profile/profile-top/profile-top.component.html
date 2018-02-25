@@ -12,20 +12,15 @@
         <li>You can use only Test network(Ropsten, Kovan, Rinkeby).</li>
       </ul>
 
-      <div *ngIf="this.model.account; then thenBlock; else elseBlock"></div>
+      <div *ngIf="wallet.address; then thenBlock;"></div>
       <ng-template #thenBlock>
         <mat-form-field>
-          <mat-select placeholder="Target Address" [(ngModel)]="model.account">
-            <mat-option *ngFor="let account of accounts" [value]="account">{{account}}</mat-option>
-          </mat-select>
+          <input matInput placeholder="Target Address" disabled [value]="wallet.address">
         </mat-form-field>
         <div class="actions">
-          <button mat-raised-button (click)="showModal(model.account)">Set</button>
+          <button mat-raised-button (click)="showModal()">Set</button>
           <button mat-raised-button (click)="getProfile()">Load</button>
         </div>
-      </ng-template>
-      <ng-template #elseBlock>
-        <button mat-raised-button (click)="getAccount()">Load Your Accounts</button>
       </ng-template>
     </div>
   

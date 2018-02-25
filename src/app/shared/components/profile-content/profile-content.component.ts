@@ -14,12 +14,12 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./profile-content.component.scss']
 })
 export class ProfileContentComponent implements OnInit, OnDestroy {
-  @select(['app', 'networkId']) readonly networkId$: Observable<any>;
+  @select(['app', 'networkName']) readonly networkName$: Observable<any>;
   @Input() public profile: ProfileModel;
 
   domain: string;
-  networkId: number;
-  networkIdSub: Subscription;
+  networkName: number;
+  networkNameSub: Subscription;
 
   private etherscanUrl = {
     1: 'https://etherscan.io/',
@@ -48,8 +48,8 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
    * @memberof ProfileContentComponent
    */
   ngOnInit(): void {
-    this.networkIdSub = this.networkId$.subscribe((networkId: number) => {
-      this.networkId = networkId;
+    this.networkNameSub = this.networkName$.subscribe((networkName: number) => {
+      this.networkName = networkName;
     });
   }
 
@@ -59,7 +59,7 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
    * @memberof ProfileContentComponent
    */
   ngOnDestroy(): void {
-    this.networkIdSub.unsubscribe();
+    this.networkNameSub.unsubscribe();
   }
 
   /**
@@ -69,7 +69,7 @@ export class ProfileContentComponent implements OnInit, OnDestroy {
    * @memberof ProfileTopComponent
    */
   openLink(id: number): void {
-    const url = this.etherscanUrl[this.networkId];
+    const url = this.etherscanUrl[this.networkName];
     if (url) {
       setTimeout(() => {
         window.open(`${url}block/${id}`);

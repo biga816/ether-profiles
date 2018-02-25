@@ -12,26 +12,26 @@ import 'rxjs/add/operator/catch';
 
 // shared
 import { IPayloadAction } from './shared/utils/payload-action.types';
-import { Web3Service } from './shared/services/web3.service';
+// import { Web3Service } from './shared/services/web3.service';
+import { EthersService } from './shared/services/ethers.service';
 
 @Injectable()
 export class AppEpics {
   constructor(
     private service: AppService,
-    private web3Service: Web3Service
+    // private web3Service: Web3Service
+    private ethersService: EthersService
   ) {}
 
-  @Epic() searchProfile = (action$: ActionsObservable<any>) => {
+  @Epic() setNetworkName = (action$: ActionsObservable<any>) => {
     return action$.ofType(AppActions.SET_NETWORK_NAME)
       .mergeMap(({ payload, meta }: IPayloadAction<any, any>) => {
-        return this.web3Service.getNetworkId()
-          .then(networkId => ({
-              type: AppActions.SET_NETWORK_NAME_SUCCESS,
-              meta: { networkId }
-            }))
-          .catch(() => ({
-              type: AppActions.SET_NETWORK_NAME_ERROR
-            }));
+        this.ethersService.setProvider(meta.networkName);
+
+        return Observable.of({
+          type: AppActions.SET_NETWORK_NAME_SUCCESS,
+          meta: { networkName: meta.networkName }
+        });
       });
   }
 
@@ -45,6 +45,20 @@ export class AppEpics {
             }))
           .catch(() => ({
               type: AppActions.GET_CONTRACT_OWNER_ERROR
+            }));
+      });
+  }
+
+  @Epic() setWallet = (action$: ActionsObservable<any>) => {
+    return action$.ofType(AppActions.GET_BALANCE)
+      .mergeMap(({ payload, meta }: IPayloadAction<any, any>) => {
+        return this.ethersService.getBalance(meta.address)
+          .then(balance => ({
+              type: AppActions.GET_BALANCE_SUCCESS,
+              meta: { balance }
+            }))
+          .catch(() => ({
+              type: AppActions.GET_BALANCE_ERROR
             }));
       });
   }

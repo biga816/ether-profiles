@@ -5,6 +5,7 @@ import 'rxjs/add/operator/toPromise';
 import { ProfileModel } from './shared/models/profile.model';
 
 import { Web3Service } from './shared/services/web3.service';
+import { EthersService } from './shared/services/ethers.service';
 import profileCoreArtifacts from './../../build/contracts/ProfileCore.json';
 
 @Injectable()
@@ -16,7 +17,8 @@ export class AppService {
    * @memberof AppService
    */
   constructor(
-    private web3Service: Web3Service,
+    // private web3Service: Web3Service,
+    private ethersService: EthersService
   ) {
   }
 
@@ -29,10 +31,8 @@ export class AppService {
    */
   async callGetUserInfo(account: string) {
     try {
-      const profileCoreAbstraction = await this.web3Service.artifactsToContract(profileCoreArtifacts);
-      const deployedProfileCore = await profileCoreAbstraction.deployed();
-
-      const info = await deployedProfileCore.getUserInfo.call({ from: account });
+      const contract = this.ethersService.getContract(profileCoreArtifacts);
+      const info = await contract.getUserInfo({ from: account });
 
       const currentProfile: ProfileModel = {
         accountAddress: info[0],
@@ -59,7 +59,7 @@ export class AppService {
    */
   async watchTransactionReceipt(account: string, txHash: string) {
     try {
-      const hasReceipt = await this.web3Service.watchTransactionReceipt(txHash);
+      const hasReceipt = await this.ethersService.watchTransactionReceipt(txHash);
       if (!hasReceipt) {
         return;
       }
@@ -79,10 +79,8 @@ export class AppService {
    */
   async getContractOwner(): Promise<any> {
     try {
-      const profileCoreAbstraction = await this.web3Service.artifactsToContract(profileCoreArtifacts);
-      const deployedProfileCore = await profileCoreAbstraction.deployed();
-
-      const ownerAddress = await deployedProfileCore.owner.call();
+      const contract = this.ethersService.getContract(profileCoreArtifacts);
+      const ownerAddress = await contract.owner.call();
 
       return ownerAddress;
     } catch (err) {

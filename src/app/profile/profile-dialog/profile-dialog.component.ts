@@ -7,6 +7,7 @@ import { ProfileActions } from '../profile.actions';
 
 // shared
 import { ProfileModel } from './../../shared/models/profile.model';
+import { WalletModel } from '../../shared/models/wallet.model';
 
 // libs
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
@@ -22,7 +23,8 @@ export class ProfileDialogComponent {
   profileCore: any;
   profileForm: FormGroup;
   profile: ProfileModel;
-  networkId: number;
+  networkName: string;
+  wallet: WalletModel;
 
   /**
    * Creates an instance of ProfileDialogComponent.
@@ -42,7 +44,8 @@ export class ProfileDialogComponent {
   ) {
     this.account = this.data.account;
     this.profile = this.data.profile || {};
-    this.networkId = this.data.networkId;
+    this.networkName = this.data.networkName;
+    this.wallet = this.data.wallet;
 
     this.profileForm = fb.group({
       address: [{value: this.account, disabled: true}],
@@ -75,7 +78,7 @@ export class ProfileDialogComponent {
         profileUrl: this.profileForm.value.profileUrl
       };
 
-      this.ngRedux.dispatch(this.actions.saveProfile(userInfo, this.networkId));
+      this.ngRedux.dispatch(this.actions.saveProfile(userInfo, this.networkName, this.wallet.privateKey));
       this.dialogRef.close();
     }
   }

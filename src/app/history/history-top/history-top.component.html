@@ -8,7 +8,7 @@
 
       <ng-template #thenBlock>
         <mat-card *ngFor="let txHash of txHashes$ | async;">
-          <div class="network">{{this.etherscanUrl[txHash.networkId].name}}</div>
+          <div class="network">{{etherscanUrl[txHash.networkName]?.name}}</div>
           <div>
             <a (click)="openLink(txHash)">{{txHash.hash}}</a>
           </div>

@@ -3,6 +3,7 @@ import { AppActions } from './app.actions';
 
 // shared
 import { IPayloadAction } from './shared/utils/payload-action.types';
+import { WalletModel } from './shared/models/wallet.model';
 
 export interface ISnackbarInfo {
   message: string;
@@ -11,16 +12,16 @@ export interface ISnackbarInfo {
 
 export interface IAppState {
   snackbarInfo: ISnackbarInfo;
-  accounts: string[];
-  networkId: number;
+  networkName: string;
   ownerAddress: string;
+  wallet: WalletModel;
 }
 
 export const INITIAL_STATE: IAppState = {
   snackbarInfo: null,
-  accounts: [],
-  networkId: null,
-  ownerAddress: null
+  networkName: null,
+  ownerAddress: null,
+  wallet: null
 };
 
 /**
@@ -39,22 +40,36 @@ export function appReducer(state: IAppState = INITIAL_STATE, action: IPayloadAct
         snackbarInfo: { message: action.meta.message, date: new Date()}
       };
     }
-    case AppActions.SET_ACCOUNT: {
-      return {
-        ...state,
-        accounts: action.meta.accounts
-      };
-    }
     case AppActions.SET_NETWORK_NAME_SUCCESS: {
       return {
         ...state,
-        networkId: action.meta.networkId
+        networkName: action.meta.networkName
       };
     }
     case AppActions.GET_CONTRACT_OWNER_SUCCESS: {
       return {
         ...state,
         ownerAddress: action.meta.ownerAddress
+      };
+    }
+    case AppActions.SET_WALLET: {
+      return {
+        ...state,
+        wallet: action.meta.wallet
+      };
+    }
+    case AppActions.REMOVE_WALLET: {
+      return {
+        ...state,
+        wallet: null
+      };
+    }
+    case AppActions.GET_BALANCE_SUCCESS: {
+      const wallet = state.wallet;
+      wallet.balance = action.meta.balance;
+      return {
+        ...state,
+        wallet
       };
     }
   }

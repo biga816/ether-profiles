@@ -62,10 +62,10 @@ export class ProfileEpics {
   @Epic() setProfile = (action$: ActionsObservable<any>) => {
     return action$.ofType(ProfileActions.SAVE_PROFILE)
       .mergeMap(({ payload, meta }: IPayloadAction<any, any>) => {
-        return this.service.sendSetUserInfo(payload.profile)
+        return this.service.sendSetUserInfo(payload.profile, payload.privateKey)
           .then(txHash => ({
               type: ProfileActions.WATCH_TRANSACTION_RECEIPT,
-              meta: { networkId: meta.networkId },
+              meta: { networkName: meta.networkName },
               payload: {
                 account: payload.profile.accountAddress,
                 txHash
@@ -89,13 +89,13 @@ export class ProfileEpics {
           // show snackbar
           Observable.of({
             type: AppActions.SHOW_SNACKBAR,
-            meta: { message: 'Saved successfully' }
+            meta: { message: 'Requested successfully' }
           }),
           // save tx hash
           Observable.of({
             type: HistoryActions.SAVE_TX_HASH,
             meta: {
-              networkId: meta.networkId,
+              networkName: meta.networkName,
               txHash: payload.txHash
             }
           }),
@@ -107,7 +107,17 @@ export class ProfileEpics {
               }))
             .catch(() => ({
                 type: ProfileActions.WATCH_TRANSACTION_RECEIPT_ERROR
-              }))
+              })),
+          // update balance
+          Observable.of({
+            type: AppActions.GET_BALANCE,
+            meta: { address: payload.account }
+          }),
+          // show snackbar
+          Observable.of({
+            type: AppActions.SHOW_SNACKBAR,
+            meta: { message: 'Updated successfully' }
+          }),
         );
       });
   }

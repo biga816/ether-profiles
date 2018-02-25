@@ -24,7 +24,8 @@ export class HistoryTopComponent implements OnInit {
    * Creates an instance of HistoryTopComponent.
    * @memberof HistoryTopComponent
    */
-  constructor() { }
+  constructor() {
+  }
 
   /**
    *
@@ -41,9 +42,7 @@ export class HistoryTopComponent implements OnInit {
    * @memberof HistoryTopComponent
    */
   openLink(txHash: ITxHash): void {
-    console.log(txHash.networkId);
-    const url = this.etherscanUrl[txHash.networkId] ? this.etherscanUrl[txHash.networkId].path : null;
-    console.log(url);
+    const url = this.etherscanUrl[txHash.networkName] ? this.etherscanUrl[txHash.networkName].path : null;
     if (url) {
       setTimeout(() => {
         window.open(`${url}tx/${txHash.hash}`);

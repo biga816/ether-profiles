@@ -1,0 +1,57 @@
+<div class="dialog-inner">
+  <mat-toolbar class="dialog-header">
+      <span>Wallet Info</span>
+      <span class="example-spacer"></span>
+      <mat-icon class="example-icon" (click)="close()">close</mat-icon>
+  </mat-toolbar>
+  <!-- wallet info -->
+  <div class="info" *ngIf="wallet">
+    <mat-list role="list">
+      <mat-list-item role="listitem">
+        <h3 class="value" matLine>{{wallet.balance}} ETH</h3>
+        <p class="sub-value" matLine>{{wallet.address}}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-slide-toggle color="warn" (change)="change($event)">Show Secret Info</mat-slide-toggle>
+      </mat-list-item>
+      
+      <div class="secret-items" [ngClass]="{'show': isShowSecret}">
+        <div class="secret-items-container">
+          <hr>
+          <mat-list-item role="listitem">
+            <h3 matLine>Private Key</h3>
+            <p class="sub-value" matLine>{{wallet.privateKey}}</p>
+          </mat-list-item>
+          <hr>
+          <mat-list-item role="listitem">
+            <h3 matLine>Mnemonic</h3>
+            <p class="sub-value" matLine>{{wallet.mnemonic}}</p>
+          </mat-list-item>
+          <hr>
+        </div>
+        <button mat-raised-button color="warn" (click)="removeAddress()">remove address</button>
+      </div>
+    </mat-list>
+  </div>
+  <!-- no wallet -->
+  <div *ngIf="!wallet">
+    <div class="info">
+      <h3>Import from Metamask</h3>
+      <button mat-raised-button (click)="importMetamask()">Import</button>
+
+      <div class="or-line">
+        <h3 class="message"><span>or</span></h3>
+      </div>
+
+      <form novalidate>
+        <h3>Import from Mnemonic</h3>
+        <mat-form-field>
+          <input matInput name="mnemonic" placeholder="Mnemonic" [(ngModel)]="mnemonic">
+        </mat-form-field>
+      </form>
+      <button mat-raised-button (click)="import()">Import</button>
+    </div>
+  </div>
+  <!-- <button mat-button (click)="show()">Show Secret Info</button> -->
+</div> 
+  

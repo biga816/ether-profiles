@@ -7,6 +7,7 @@ export class LocalstorageStore {
   middleware = store => next => action => {
     const state = store.getState();
     localStorage.setItem('history-state', JSON.stringify(state.history));
+    localStorage.setItem('app-state', JSON.stringify(state.app));
 
     return next(action);
   }

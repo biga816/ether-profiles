@@ -1,7 +1,7 @@
 @import "../assets/styles/common.scss";
 
-// header, footer
 :host /deep/ {
+  // header, footer
   .app-footer {
     padding: 0;
     height: 56px;
@@ -49,6 +49,13 @@
       }
     }
   }
+
+  // network icon
+  .network {
+    .mat-select-value, .mat-select-arrow {
+      color: white;
+    }
+  }
 }
 
 // header
@@ -80,13 +87,16 @@
     transition: all 200ms;
     position: fixed;
     right: 8px;
-    top: 17px;
+    top: 5px;
     background-color: $gray;
-    border-radius: 50%;
-    height: 80px;
-    width: 80px;
+    border-radius: 4px;
+    height: 46px;
+    line-height: 46px;
+    width: 100px;
     display: flex;
     text-align: center;
+    font-size: $sizeSm;
+    padding-right: 4px;
 
     &.mainnet {
       background-color: $mainNetworkColor;
@@ -103,21 +113,44 @@
     &.rinkeby {
       background-color: $rinkebyNetworkColor;
     }
-
-    p {
-      line-height: 24px;
-      // margin: 8px;
-      margin: auto;
-      font-size: $sizeMd;
-    }
-
-    label {
-      display: block;
-      font-size: 12px;
-      line-height: 12px;
-      font-weight: 300;
-    }
   }
+}
+
+// footer
+.wallet-fab {
+  // @extend .shadow;
+  position: fixed;
+  bottom: 16px;
+  right: 8px;
+  text-align: center;
+  background-color: $mainColor;
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+
+  > div {
+    width: 100%;
+  }
+
+  .value {
+    font-size: $sizeMd;
+    line-height: $sizeMd;
+    font-weight: bold;
+  }
+
+  .address {
+    font-size: $sizeXs;
+    line-height: $sizeXs;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 8px;
+    width: 70px;
+  }
+
 }
 
 // side nav
@@ -192,7 +225,7 @@
 }
 
 /**
- * menu style & ations
+ * menu style & actions
  */
 .menu-trigger,
 .menu-trigger span {
@@ -247,7 +280,8 @@
   .app-toolber {
     .network {
       right: 16px;
-      top: 22px;
+      // top: 22px;
+      top: 10px;
     }
   }
 }

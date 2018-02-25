@@ -70,6 +70,11 @@ export class AppModule {
 
     // set default state
     const persistedState = localStorage.getItem('history-state') ? { history: JSON.parse(localStorage.getItem('history-state')) } : {};
+    if (localStorage.getItem('app-state')) {
+      const appState = JSON.parse(localStorage.getItem('app-state'));
+      appState.snackbarInfo = null;
+      persistedState['app'] = appState;
+    }
 
     ngRedux.configureStore(rootReducer, persistedState, middleware);
   }

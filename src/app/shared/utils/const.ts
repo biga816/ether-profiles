@@ -11,21 +11,25 @@ export const WEB3 = {
   }
 };
 
+export const ETH = {
+  NETWORKS: [
+    { id: 3, name: 'ropsten'},
+    { id: 4, name: 'rinkeby'},
+    { id: 42, name: 'kovan'}
+  ]
+};
+
 export const URL = {
   ETHRSCAN: {
-    1: {
-      name: 'Main Network',
-      path: 'https://etherscan.io/'
-    },
-    3: {
+    'ropsten': {
       name: 'Ropsten Test Network',
       path: 'https://ropsten.etherscan.io/'
     },
-    4: {
+    'rinkeby': {
       name: 'Rinkeby Test Network',
       path: 'https://rinkeby.etherscan.io/'
     },
-    42: {
+    'kovan': {
       name: 'Kovan Test Network',
       path: 'https://kovan.etherscan.io/'
     }

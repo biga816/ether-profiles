@@ -12,6 +12,7 @@ import { ProfileDialogComponent } from '../profile-dialog/profile-dialog.compone
 
 // shared
 import { ProfileModel } from './../../shared/models/profile.model';
+import { WalletModel } from '../../shared/models/wallet.model';
 
 // contracts
 import profileCoreArtifacts from '../../../../build/contracts/ProfileCore.json';
@@ -25,16 +26,17 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./profile-top.component.scss']
 })
 export class ProfileTopComponent implements OnInit, OnDestroy {
-  @select(['app', 'accounts']) readonly account$: Observable<any>;
   @select(['profile', 'profiles']) readonly profiles$: Observable<any>;
-  @select(['app', 'networkId']) readonly networkId$: Observable<any>;
+  @select(['app', 'networkName']) readonly networkName$: Observable<any>;
+  @select(['app', 'wallet']) readonly wallet$: Observable<any>;
 
-  accounts: string[];
   profiles: ProfileModel[];
-  networkId: number;
-  accountsSub: Subscription;
+  networkName: number;
+  wallet: WalletModel;
+
   profilesSub: Subscription;
-  networkIdSub: Subscription;
+  networkNameSub: Subscription;
+  walletSub: Subscription;
 
 
   model = {
@@ -62,19 +64,20 @@ export class ProfileTopComponent implements OnInit, OnDestroy {
    * @memberof ProfileTopComponent
    */
   ngOnInit(): void {
-    this.accountsSub = this.account$.subscribe((accounts: string[]) => {
-      this.accounts = accounts;
-      this.model.account = accounts[0];
-      this.getProfile();
-    });
-
     this.profilesSub = this.profiles$.subscribe((profiles: any[]) => {
       this.profiles = profiles;
     });
 
-    this.networkIdSub = this.networkId$.subscribe((networkId: number) => {
-      this.networkId = networkId;
+    this.networkNameSub = this.networkName$.subscribe((networkName: number) => {
+      this.networkName = networkName;
+      this.getProfile();
     });
+
+    this.walletSub = this.wallet$.subscribe((wallet: WalletModel) => {
+      this.wallet = wallet;
+      this.getProfile();
+    });
+
   }
 
   /**
@@ -83,9 +86,9 @@ export class ProfileTopComponent implements OnInit, OnDestroy {
    * @memberof ProfileTopComponent
    */
   ngOnDestroy(): void {
-    this.accountsSub.unsubscribe();
     this.profilesSub.unsubscribe();
-    this.networkIdSub.unsubscribe();
+    this.networkNameSub.unsubscribe();
+    this.walletSub.unsubscribe();
   }
 
   /**
@@ -94,7 +97,11 @@ export class ProfileTopComponent implements OnInit, OnDestroy {
    * @memberof ProfileTopComponent
    */
   getProfile(): void {
-    this.ngRedux.dispatch(this.actions.featchProfile(this.model.account));
+    if (!this.wallet) {
+      return;
+    }
+
+    this.ngRedux.dispatch(this.actions.featchProfile(this.wallet.address));
   }
 
   /**
@@ -103,18 +110,20 @@ export class ProfileTopComponent implements OnInit, OnDestroy {
    * @param {any} account
    * @memberof ProfileTopComponent
    */
-  showModal(account): void {
-    if (this.networkId <= 1) {
+  showModal(): void {
+    if (!this.networkName) {
       alert('Please select Test network(Ropsten, Kovan, Rinkeby) at Metamask');
       return;
     }
-    const profileIdx = this.profiles.findIndex((profile) => profile.accountAddress === account.toLowerCase());
+
+    const profileIdx = this.profiles.findIndex((profile) => profile.accountAddress.toLowerCase() === this.wallet.address.toLowerCase());
 
     this.dialog.open(ProfileDialogComponent, {
       data: {
-        account,
+        account: this.wallet.address,
         profile: this.profiles[profileIdx],
-        networkId: this.networkId
+        networkName: this.networkName,
+        wallet: this.wallet
       }
     });
   }
@@ -129,14 +138,4 @@ export class ProfileTopComponent implements OnInit, OnDestroy {
     this.ngRedux.dispatch(this.actions.removeProfile(account));
   }
 
-  /**
-   *
-   *
-   * @memberof ProfileTopComponent
-   */
-  getAccount(): void {
-    if (!this.service.updateWeb3()) {
-      alert('You have to install Metamask!!');
-    }
-  }
 }
